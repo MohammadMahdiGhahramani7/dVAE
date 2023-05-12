@@ -139,7 +139,7 @@ class Decoder(nn.Module):
         
         return self.convTR2(x)
         
-class Model(nn.Module):
+class dVAE(nn.Module):
     def __init__(self, num_res_layers, num_res_hiddens, num_hiddens, num_embs, emb_dim, Beta):
       
         super(Model, self).__init__()
@@ -198,7 +198,7 @@ def train(model, opt, dataloader, epochs, data_var, K):
   return total_L, rec_L, vq_L, perplexities
 
 @torch.no_grad()
-def generation(dataloader):
+def generation(model, dataloader):
 
   (orgs, _) = next(iter(dataloader))
   orgs = orgs.to(device)
@@ -243,7 +243,7 @@ dataloader = DataLoader(training_data, batch_size=batch_size, shuffle=True, pin_
 val_dataloader = DataLoader(validation_data, batch_size=32, shuffle=True, pin_memory=True)
                                  
 # Model
-model = Model(num_res_layers, num_res_hiddens, num_hiddens, num_embs, emb_dim, Beta).to(device)
+model = dVAE(num_res_layers, num_res_hiddens, num_hiddens, num_embs, emb_dim, Beta).to(device)
 optimizer = optim.Adam(model.parameters(), lr=lr, amsgrad=False)
 
 # Training
@@ -253,7 +253,7 @@ end_time = time.time()
 print(f"Training time: {end_time- start_time:.3f} seconds")
 
 # Generate images
-X, X_tilda = generation(val_dataloader)
+X, X_tilda = generation(model, val_dataloader)
 lighter = 0.5
 
 show(make_grid(X) + lighter)
