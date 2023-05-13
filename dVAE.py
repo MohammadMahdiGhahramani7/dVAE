@@ -142,7 +142,7 @@ class Decoder(nn.Module):
 class dVAE(nn.Module):
     def __init__(self, num_res_layers, num_res_hiddens, num_hiddens, num_embs, emb_dim, Beta):
       
-        super(Model, self).__init__()
+        super().__init__()
         
         self.encoder = Encoder(3, num_res_layers, num_res_hiddens, num_hiddens)
 
