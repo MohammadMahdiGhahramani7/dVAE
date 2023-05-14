@@ -223,6 +223,7 @@ num_res_layers = 2
 emb_dim = 64
 num_embs = 512
 Beta = 6.6
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # Load the data
 training_data = CIFAR10(root="data", train=True, download=True,
