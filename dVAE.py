@@ -172,7 +172,7 @@ def train(model, opt, dataloader, epochs, data_var, K):
     for idx, (img, _) in enumerate(dataloader):
 
         img = img.to(device)
-        optimizer.zero_grad()
+        opt.zero_grad()
 
         vq_loss, img_rec, perplexity = model(img)
         rec_loss= F.mse_loss(img_rec, img) / data_var
@@ -184,7 +184,7 @@ def train(model, opt, dataloader, epochs, data_var, K):
         perps += perplexity
 
         loss.backward()
-        optimizer.step()
+        opt.step()
         step += 1
     
     vq_L.append(vq_losses.item() / step)
