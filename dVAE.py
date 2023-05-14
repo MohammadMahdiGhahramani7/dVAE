@@ -212,6 +212,7 @@ def show(img):
     fig = plt.imshow(np.transpose(npimg, (1,2,0)), interpolation='nearest')
     fig.axes.get_xaxis().set_visible(False)
     fig.axes.get_yaxis().set_visible(False)
+    plt.show()
                               
 # Set hyp-params
 batch_size = 256
